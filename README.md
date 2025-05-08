@@ -14,6 +14,8 @@ This starter kit provides a ready-to-use configuration for running n8n with all 
 
 ✅ [**PostgreSQL**](https://www.postgresql.org/) - Reliable database for storing workflow data and configurations
 
+✅ [**pgAdmin 4**](https://www.pgadmin.org/) - Web-based PostgreSQL administration tool
+
 ### Environment Configurations
 
 This starter kit includes two Docker Compose configurations:
@@ -23,6 +25,7 @@ This starter kit includes two Docker Compose configurations:
    - n8n worker
    - Redis (for queuing and caching)
    - PostgreSQL (for workflow data storage)
+   - pgAdmin 4 (for database administration)
 
 2. **prod.docker-compose.yml** - For production environment:
    - n8n server
@@ -69,15 +72,28 @@ This starter kit includes two Docker Compose configurations:
    docker compose up -d
    ```
 
-4. **Access n8n**
+4. **Access n8n and pgAdmin**
 
    Open your browser and navigate to:
 
    ```
-   http://localhost:5678
+   n8n:     http://localhost:5678
+   pgAdmin: http://localhost:5050
    ```
 
-   The default credentials are set in your environment file.
+   For pgAdmin, use the following default credentials (or the ones you set in your environment file):
+   - Email: admin@example.com
+   - Password: admin
+
+   After logging into pgAdmin, you'll need to add a new server connection:
+   1. Right-click on "Servers" in the left panel and select "Create" > "Server..."
+   2. On the "General" tab, give it a name (e.g., "n8n-postgres")
+   3. On the "Connection" tab, enter:
+      - Host: postgres
+      - Port: 5432
+      - Maintenance database: n8n
+      - Username: root (or your POSTGRES_USER value)
+      - Password: password (or your POSTGRES_PASSWORD value)
 
 5. **Stop the environment**
 
